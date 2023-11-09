@@ -2,8 +2,9 @@
 using System.Diagnostics;
 using WineShop.Models;
 
-namespace WineShopWeb.Controllers
+namespace WineShopWeb.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc; 
+﻿using Microsoft.AspNetCore.Mvc;
 using WineShop.DataAccess;
 using WineShop.DataAccess.Repository.IRepository;
 using WineShop.Models;
 
-namespace WineShopWeb.Controllers
+namespace WineShopWeb.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -42,40 +43,40 @@ namespace WineShopWeb.Controllers
             }
             return View(obj);
         }
-   
-// GET for Edit action
-public IActionResult Edit(int? id)
-{
-    if (id == null||id == 0) 
+
+        // GET for Edit action
+        public IActionResult Edit(int? id)
+        {
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
-    var categoryFromDb = _unitOfWork.Category.GetFirstOrDefault(u=>u.Id==id);
+            var categoryFromDb = _unitOfWork.Category.GetFirstOrDefault(u => u.Id == id);
             if (categoryFromDb == null)
             {
                 return NotFound();
             }
-    return View(categoryFromDb);
-}
+            return View(categoryFromDb);
+        }
 
-// Post for Edit action
-[HttpPost]
-[ValidateAntiForgeryToken]
-public IActionResult Edit(Category obj)
-{
-    if (obj.Name == obj.DisplayOrder.ToString())
-    {
-        ModelState.AddModelError("name", "Order cannot be the same as the name");
-    }
-    if (ModelState.IsValid)
-    {
-       _unitOfWork.Category.Update(obj);
-       _unitOfWork.Save();
-        TempData["success"] = "Category successfully edited";
+        // Post for Edit action
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Category obj)
+        {
+            if (obj.Name == obj.DisplayOrder.ToString())
+            {
+                ModelState.AddModelError("name", "Order cannot be the same as the name");
+            }
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Category.Update(obj);
+                _unitOfWork.Save();
+                TempData["success"] = "Category successfully edited";
                 return RedirectToAction("Index");
-    }
-    return View(obj);
-}
+            }
+            return View(obj);
+        }
 
         // GET for Delete action
         public IActionResult Delete(int? id)
@@ -84,7 +85,7 @@ public IActionResult Edit(Category obj)
             {
                 return NotFound();
             }
-            var categoryFromDb = _unitOfWork.Category.GetFirstOrDefault(u=>u.Id ==id);
+            var categoryFromDb = _unitOfWork.Category.GetFirstOrDefault(u => u.Id == id);
             if (categoryFromDb == null)
             {
                 return NotFound();
@@ -97,16 +98,16 @@ public IActionResult Edit(Category obj)
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
-            var obj = _unitOfWork.Category.GetFirstOrDefault(u=>u.Id==id);
+            var obj = _unitOfWork.Category.GetFirstOrDefault(u => u.Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
-                _unitOfWork.Category.Remove(obj);
-                _unitOfWork.Save();
+            _unitOfWork.Category.Remove(obj);
+            _unitOfWork.Save();
             TempData["success"] = "Category successfully deleted";
 
             return RedirectToAction("Index");
-            }
+        }
     }
 }
