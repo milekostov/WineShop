@@ -19,6 +19,7 @@ namespace WineShop.DataAccess.Repository
             _db = db;
             this.dbSet = _db.Set<T>();
         }
+
         public void Add(T entity)
         {
             dbSet.Add(entity);

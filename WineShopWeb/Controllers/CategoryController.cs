@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc; 
 using WineShop.DataAccess;
 using WineShop.DataAccess.Repository.IRepository;
 using WineShop.Models;
@@ -7,14 +7,14 @@ namespace WineShopWeb.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ICategoryRepository _db;
-        public CategoryController(ICategoryRepository db)
+        private readonly IUnitOfWork _unitOfWork;
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            _db = db;
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Index()
         {
-            IEnumerable<Category> objCategoryList = _db.GetAll();
+            IEnumerable<Category> objCategoryList = _unitOfWork.Category.GetAll();
             return View(objCategoryList);
         }
 
@@ -35,8 +35,8 @@ namespace WineShopWeb.Controllers
             }
             if (ModelState.IsValid)
             {
-                _db.Add(obj);
-                _db.Save();
+                _unitOfWork.Category.Add(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Category successfully created";
                 return RedirectToAction("Index");
             }
@@ -50,7 +50,7 @@ public IActionResult Edit(int? id)
             {
                 return NotFound();
             }
-    var categoryFromDb = _db.GetFirstOrDefault(u=>u.Id==id);
+    var categoryFromDb = _unitOfWork.Category.GetFirstOrDefault(u=>u.Id==id);
             if (categoryFromDb == null)
             {
                 return NotFound();
@@ -69,8 +69,8 @@ public IActionResult Edit(Category obj)
     }
     if (ModelState.IsValid)
     {
-        _db.Update(obj);
-        _db.Save();
+       _unitOfWork.Category.Update(obj);
+       _unitOfWork.Save();
         TempData["success"] = "Category successfully edited";
                 return RedirectToAction("Index");
     }
@@ -84,7 +84,7 @@ public IActionResult Edit(Category obj)
             {
                 return NotFound();
             }
-            var categoryFromDb = _db.GetFirstOrDefault(u=>u.Id ==id);
+            var categoryFromDb = _unitOfWork.Category.GetFirstOrDefault(u=>u.Id ==id);
             if (categoryFromDb == null)
             {
                 return NotFound();
@@ -97,13 +97,13 @@ public IActionResult Edit(Category obj)
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
-            var obj = _db.GetFirstOrDefault(u=>u.Id==id);
+            var obj = _unitOfWork.Category.GetFirstOrDefault(u=>u.Id==id);
             if (obj == null)
             {
                 return NotFound();
             }
-                _db.Remove(obj);
-                _db.Save();
+                _unitOfWork.Category.Remove(obj);
+                _unitOfWork.Save();
             TempData["success"] = "Category successfully deleted";
 
             return RedirectToAction("Index");
