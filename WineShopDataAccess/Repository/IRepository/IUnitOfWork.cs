@@ -9,7 +9,7 @@ namespace WineShop.DataAccess.Repository.IRepository
     public interface IUnitOfWork
     {
         ICategoryRepository Category { get; }
-        ICoverTypeRepository CoverType { get; }
+        IPackagingTypeRepository PackagingType { get; }
         void Save();
     }
 }

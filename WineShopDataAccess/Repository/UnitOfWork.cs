@@ -14,11 +14,11 @@ namespace WineShop.DataAccess.Repository
         {
             _db = db;
             Category = new CategoryRepository(_db);
-            CoverType = new CoverTypeRepository(_db);
+            PackagingType = new PackagingTypeRepository(_db);
         }
 
         public ICategoryRepository Category { get; private set; }
-        public ICoverTypeRepository CoverType { get; private set; }
+        public IPackagingTypeRepository PackagingType { get; private set; }
 
         public void Save()
         {

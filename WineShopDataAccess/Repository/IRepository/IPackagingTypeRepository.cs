@@ -7,9 +7,9 @@ using WineShop.Models;
 
 namespace WineShop.DataAccess.Repository.IRepository
 {
-    public interface ICoverTypeRepository : IRepository<CoverType>
+    public interface IPackagingTypeRepository : IRepository<PackagingType>
     {
-        void Update(CoverType obj);
+        void Update(PackagingType obj);
         
     }
 }

@@ -8,10 +8,10 @@ using WineShop.Models;
 
 namespace WineShop.DataAccess.Repository
 {
-    public class CoverTypeRepository : Repository<CoverType>, ICoverTypeRepository
+    public class PackagingTypeRepository : Repository<PackagingType>, IPackagingTypeRepository
     {
         private ApplicationDbContext _db;
-        public CoverTypeRepository(ApplicationDbContext db) : base(db)
+        public PackagingTypeRepository(ApplicationDbContext db) : base(db)
         {
             _db = db; 
         }
@@ -21,9 +21,9 @@ namespace WineShop.DataAccess.Repository
             _db.SaveChanges();
         }
 
-        public void Update(CoverType obj)
+        public void Update(PackagingType obj)
         {
-            _db.CoverTypes.Update(obj);
+            _db.PackagingTypes.Update(obj);
         }
     }
 }
